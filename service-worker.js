@@ -53,14 +53,14 @@ self.addEventListener('fetch', function(e) {
   }
 
   console.log('[ServiceWorker] Fetch', e.request.url);
-  var dataUrl = 'https://publicdata-weather.firebaseio.com/';
-  if (e.request.url.indexOf(dataUrl) === 0) {
+  if (e.request.url.indexOf('data/') != -1) {
     e.respondWith(
       fetch(e.request)
         .then(function(response) {
           return caches.open(dataCacheName).then(function(cache) {
             cache.put(e.request.url, response.clone());
             console.log('[ServiceWorker] Fetched&Cached Data');
+            console.log(e.request.url);
             return response;
           });
         })
