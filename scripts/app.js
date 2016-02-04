@@ -131,6 +131,6 @@ app.selectedCityKeys.forEach((cityKey) => {
 // Add feature check for Service Workers here
 if('serviceWorker' in navigator) {
   navigator.serviceWorker
-           .register('./service-worker.js')
+           .register('./service-worker-2.js')
            .then(() => console.log('Service Worker Registered'));
 }

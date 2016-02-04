@@ -16,7 +16,8 @@
   "homepage": "https://github.com/owencm/ModernWebSummitWorkshop#readme",
   "dependencies": {
     "body-parser": "^1.14.2",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "sw-toolbox": "^3.1.1"
   },
   "devDependencies": {
     "node-gcm": "^0.14.0"
