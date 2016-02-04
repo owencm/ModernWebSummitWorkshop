@@ -43,7 +43,14 @@ self.addEventListener('activate', function(e) {
   );
 });
 
+var nosw = 0;
 self.addEventListener('fetch', function(e) {
+  var url = new URL(e.request.url);
+  if(nosw || (url.search.indexOf("nosw=1") >= 0)) {
+    nosw = 1;
+    return; // Fall through to the network
+  }
+
   console.log('[ServiceWorker] Fetch', e.request.url);
   var dataUrl = 'https://publicdata-weather.firebaseio.com/';
   if (e.request.url.indexOf(dataUrl) === 0) {
