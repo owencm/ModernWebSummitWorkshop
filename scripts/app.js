@@ -87,43 +87,21 @@
    *
    ****************************************************************************/
 
-  // Gets a forecast for a specific city and update the card with the data
-  app.getForecast = function(key, label) {
-    var url = 'https://publicdata-weather.firebaseio.com/';
-    url += key + '.json';
-    if ('caches' in window) {
-      caches.match(url).then(function(response) {
-        if (response) {
-          response.json().then(function(json) {
-            // Only update if the XHR is still pending, otherwise the XHR
-            // has already returned and provided the latest data.
-            if (app.hasRequestPending) {
-              console.log('[App] Forecast Updated From Cache');
-              json.key = key;
-              json.label = label;
-              app.updateForecastCard(json);
-            }
-          });
-        }
-      });
-    }
+  // Gets a forecast for a specific city
+  app.getForecast = function(city) {
+    var url = city + '.json';
     app.hasRequestPending = true;
     // Make the XHR to get the data, then update the card
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-      if (request.readyState === XMLHttpRequest.DONE) {
-        if (request.status === 200) {
-          var response = JSON.parse(request.response);
-          response.key = key;
-          response.label = label;
-          app.hasRequestPending = false;
-          console.log('[App] Forecast Updated From Network');
-          app.updateForecastCard(response);
-        }
+    return fetch(url).then(function(response) {
+      if (response.status === 200) {
+        return response.json();
       }
-    };
-    request.open('GET', url);
-    request.send();
+    }).then(function(data){
+      data.city = city;
+      app.hasRequestPending = false;
+      console.log('[App] Forecast Updated From Network');
+      return data;
+    });
   };
 
   // Iterate all of the cards and attempt to get the latest forecast data
@@ -132,13 +110,6 @@
     keys.forEach(function(key) {
       app.getForecast(key);
     });
-  };
-
-  // Save list of cities to localStorage, see note below about localStorage.
-  app.saveSelectedCities = function() {
-    var selectedCities = JSON.stringify(app.selectedCities);
-    // IMPORTANT: See notes about use of localStorage.
-    localStorage.selectedCities = selectedCities;
   };
 
   /*****************************************************************************
@@ -153,19 +124,15 @@
    *
    ****************************************************************************/
 
-  app.selectedCities = localStorage.selectedCities;
-  if (app.selectedCities) {
-    app.selectedCities = JSON.parse(app.selectedCities);
-    app.selectedCities.forEach(function(city) {
-      app.getForecast(city.key, city.label);
+  // TODO: Fetch app.selectedCities from the local server
+  // app.selectedCities = ?
+  app.selectedCities = [ 'London' ];
+  app.selectedCities.forEach(function(city) {
+    app.getForecast(city).then(function (forecast) {
+      console.log(forecast);
     });
-  } else {
-    app.updateForecastCard(initialWeatherForecast);
-    app.selectedCities = [
-      {key: initialWeatherForecast.key, label: initialWeatherForecast.label}
-    ];
-    app.saveSelectedCities();
-  }
+  });
+
 
   // Add feature check for Service Workers here
   if('serviceWorker' in navigator) {
