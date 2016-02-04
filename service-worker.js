@@ -1,5 +1,6 @@
-var dataCacheName = 'weatherData-v1';
-var cacheName = 'weatherPWA-step-celebrate-1';
+var version = '3';
+var dataCacheName = 'weatherData-v' + version;
+var cacheName = 'weatherPWA-v' + version;
 var filesToCache = [
   './',
   './index.html',
@@ -8,8 +9,7 @@ var filesToCache = [
   './images/cloudy-scattered-showers.png',
   './images/cloudy.png',
   './images/fog.png',
-  './images/ic_add_white_24px.svg',
-  './images/ic_refresh_white_24px.svg',
+  './images/icons/icon-256x256.png',
   './images/partly-cloudy.png',
   './images/rain.png',
   './images/scattered-showers.png',
