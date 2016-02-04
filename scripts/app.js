@@ -1,10 +1,10 @@
 'use strict';
 
 /*****************************************************************************
- *
- * Setup the core app model
- *
- ****************************************************************************/
+*
+* Setup the core app model
+*
+****************************************************************************/
 
 var app = {
   isLoading: true,
@@ -18,10 +18,10 @@ var app = {
 };
 
 /*****************************************************************************
- *
- * Methods to update/refresh the UI
- *
- ****************************************************************************/
+*
+* Methods to update/refresh the UI
+*
+****************************************************************************/
 
 // Updates a weather card with the latest weather forecast. If the card
 // doesn't already exist, it's cloned from the template.
@@ -36,7 +36,7 @@ app.updateForecastCard = function(cityKey, data) {
     app.visibleCards[cityKey] = card;
   }
   card.querySelector('.temperature').innerHTML =
-    Math.round(data.currently.temperature) + '&deg;F';
+  Math.round(data.currently.temperature) + '&deg;F';
   if (app.isLoading) {
     app.spinner.setAttribute('hidden', true);
     app.container.removeAttribute('hidden');
@@ -45,10 +45,10 @@ app.updateForecastCard = function(cityKey, data) {
 };
 
 /*****************************************************************************
- *
- * Event listeners for the UI
- *
- ****************************************************************************/
+*
+* Event listeners for the UI
+*
+****************************************************************************/
 
 document.querySelector('#butNotif').addEventListener('click', function () {
   var pushClient = new goog.propel.Client({
@@ -64,10 +64,10 @@ document.querySelector('#butNotif').addEventListener('click', function () {
 });
 
 /*****************************************************************************
- *
- * Methods for dealing with the network
- *
- ****************************************************************************/
+*
+* Methods for dealing with the network
+*
+****************************************************************************/
 
 // Gets a forecast for a specific city
 app.getForecast = function(cityKey) {
@@ -85,12 +85,31 @@ app.getForecast = function(cityKey) {
   });
 };
 
+/*****************************************************************************
+*
+* Listen for the add to home screen events
+*
+****************************************************************************/
+
+window.addEventListener('beforeinstallprompt', function(e) {
+  // Here you could send an analytics ping that the A2HS banner has been shown
+  console.log('[App] Add to home screen banner shown');
+  e.userChoice.then(function(choiceResult) {
+    // Here you could send an analytics ping about the users response to the
+    // A2HS banner
+    if (choiceResult.outcome == 'dismissed') {
+      console.log('[App] User cancelled home screen install');
+    } else {
+      console.log('[App] User added to home screen');
+    }
+  });
+});
 
 /*****************************************************************************
- *
- * Start the app
- *
- ****************************************************************************/
+*
+* Start the app
+*
+****************************************************************************/
 
 app.selectedCityKeys = [ 'newyork' ];
 app.selectedCityKeys.forEach(function(cityKey) {
@@ -103,6 +122,6 @@ app.selectedCityKeys.forEach(function(cityKey) {
 // Add feature check for Service Workers here
 if('serviceWorker' in navigator) {
   navigator.serviceWorker
-           .register('./service-worker.js')
-           .then(function() { console.log('Service Worker Registered'); });
+  .register('./service-worker.js')
+  .then(function() { console.log('Service Worker Registered'); });
 }
