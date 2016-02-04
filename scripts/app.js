@@ -9,6 +9,7 @@
     selectedCities: [],
     spinner: document.querySelector('.loader'),
     cardTemplate: document.querySelector('.cardTemplate'),
+    container: document.querySelector('#container'),
     daysOfWeek: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
   };
 
@@ -32,47 +33,19 @@
   // Updates a weather card with the latest weather forecast. If the card
   // doesn't already exist, it's cloned from the template.
   app.updateForecastCard = function(data) {
-    var card = app.visibleCards[data.key];
+    var card = app.visibleCards[data.city];
     if (!card) {
       card = app.cardTemplate.cloneNode(true);
       card.classList.remove('cardTemplate');
-      card.querySelector('.location').textContent = data.label;
+      card.querySelector('.location').textContent = data.city;
       card.removeAttribute('hidden');
       app.container.appendChild(card);
       app.visibleCards[data.key] = card;
     }
-    card.querySelector('.description').textContent = data.currently.summary;
     card.querySelector('.date').textContent =
       new Date(data.currently.time * 1000);
-    card.querySelector('.current .icon').classList.add(data.currently.icon);
-    card.querySelector('.current .temperature .value').textContent =
-      Math.round(data.currently.temperature);
-    card.querySelector('.current .feels-like .value').textContent =
-      Math.round(data.currently.apparentTemperature);
-    card.querySelector('.current .precip').textContent =
-      Math.round(data.currently.precipProbability * 100) + '%';
-    card.querySelector('.current .humidity').textContent =
-      Math.round(data.currently.humidity * 100) + '%';
-    card.querySelector('.current .wind .value').textContent =
-      Math.round(data.currently.windSpeed);
-    card.querySelector('.current .wind .direction').textContent =
-      data.currently.windBearing;
-    var nextDays = card.querySelectorAll('.future .oneday');
-    var today = new Date();
-    today = today.getDay();
-    for (var i = 0; i < 7; i++) {
-      var nextDay = nextDays[i];
-      var daily = data.daily.data[i];
-      if (daily && nextDay) {
-        nextDay.querySelector('.date').textContent =
-          app.daysOfWeek[(i + today) % 7];
-        nextDay.querySelector('.icon').classList.add(daily.icon);
-        nextDay.querySelector('.temp-high .value').textContent =
-          Math.round(daily.temperatureMax);
-        nextDay.querySelector('.temp-low .value').textContent =
-          Math.round(daily.temperatureMin);
-      }
-    }
+    // card.querySelector('.current .temperature .value').textContent =
+      // Math.round(data.currently.temperature);
     if (app.isLoading) {
       app.spinner.setAttribute('hidden', true);
       app.container.removeAttribute('hidden');
@@ -89,7 +62,7 @@
 
   // Gets a forecast for a specific city
   app.getForecast = function(city) {
-    var url = city + '.json';
+    var url = 'data/' + city + '.json';
     app.hasRequestPending = true;
     // Make the XHR to get the data, then update the card
     return fetch(url).then(function(response) {
@@ -126,10 +99,10 @@
 
   // TODO: Fetch app.selectedCities from the local server
   // app.selectedCities = ?
-  app.selectedCities = [ 'London' ];
+  app.selectedCities = [ 'newyork' ];
   app.selectedCities.forEach(function(city) {
     app.getForecast(city).then(function (forecast) {
-      console.log(forecast);
+      app.updateForecastCard(forecast);
     });
   });
 

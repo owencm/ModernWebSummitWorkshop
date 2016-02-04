@@ -200,7 +200,7 @@ body {
     }
 }
 
-.main {
+#container {
     padding-top: 60px;
     -webkit-box-flex: 1;
     -webkit-flex: 1;
