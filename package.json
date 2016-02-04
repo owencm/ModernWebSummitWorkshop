@@ -1,0 +1,20 @@
+{
+  "name": "ModernWebSummitWorkshop",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/owencm/ModernWebSummitWorkshop/issues"
+  },
+  "homepage": "https://github.com/owencm/ModernWebSummitWorkshop#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
