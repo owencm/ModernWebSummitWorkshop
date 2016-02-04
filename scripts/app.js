@@ -44,6 +44,15 @@ app.updateForecastCard = function(cityKey, data) {
   }
 };
 
+/*****************************************************************************
+ *
+ * Event listeners for the UI
+ *
+ ****************************************************************************/
+
+document.querySelector('#butNotif').addEventListener('click', function () {
+  // TODO: do permissions for push
+});
 
 /*****************************************************************************
  *
