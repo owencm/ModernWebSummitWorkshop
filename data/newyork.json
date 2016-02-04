@@ -1,4 +1,5 @@
 {
+  "city": "New York",
   "currently": {
     "apparentTemperature": 51.2,
     "cloudCover": 1,
