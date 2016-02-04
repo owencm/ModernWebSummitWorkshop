@@ -54,6 +54,13 @@ document.querySelector('#butNotif').addEventListener('click', function () {
   var pushClient = new goog.propel.Client({
     workerUrl: 'service-worker.js', endpointUrl: 'push'
   });
+  // TODO: Dim screen
+  pushClient.requestPermission().then(function() {
+    // TODO: Handle permission denial
+    // TODO: Undim screen
+    // This will POST the user's subscription to `/${endpointUrl}/subscribe`
+    pushClient.subscribe();
+  });
 });
 
 /*****************************************************************************

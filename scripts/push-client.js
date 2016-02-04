@@ -140,12 +140,6 @@ var SUPPORTED = 'serviceWorker' in navigator && 'PushManager' in window && 'Noti
 var SCOPE = new URL('./goog.push.scope/', currentScript).href;
 var WORKER_URL = new URL('./worker.js', currentScript).href;
 
-var requestPermission = function requestPermission() {
-  return new Promise(function (resolve) {
-    return Notification.requestPermission(resolve);
-  });
-};
-
 var messageHandler = function messageHandler(event) {};
 
 var registrationReady = function registrationReady(registration) {
@@ -224,7 +218,7 @@ var PushClient = (function () {
     key: 'subscribe',
     value: _asyncToGenerator(function* () {
       // Check for permission
-      var permission = yield requestPermission();
+      var permission = yield this.requestPermission();
 
       if (permission === 'denied') {
         throw new _subscriptionFailedError2['default']('denied');
@@ -302,6 +296,13 @@ var PushClient = (function () {
       }
 
       return registration.pushManager.getSubscription();
+    })
+  }, {
+    key: 'requestPermission',
+    value: _asyncToGenerator(function* () {
+      return new Promise(function (resolve) {
+        return Notification.requestPermission(resolve);
+      });
     })
   }], [{
     key: 'supported',
