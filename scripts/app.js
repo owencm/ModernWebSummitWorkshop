@@ -111,8 +111,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
 *
 ****************************************************************************/
 
-
-
 app.selectedCityKeys = [
   'austin',
   'baltimore',
@@ -134,5 +132,5 @@ app.selectedCityKeys.forEach((cityKey) => {
 if('serviceWorker' in navigator) {
   navigator.serviceWorker
            .register('./service-worker.js')
-           .then(() => { console.log('Service Worker Registered');
-});
+           .then(() => console.log('Service Worker Registered'));
+}
