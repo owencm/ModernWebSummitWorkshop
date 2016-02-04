@@ -73,3 +73,22 @@ self.addEventListener('fetch', function(e) {
     );
   }
 });
+
+self.addEventListener('push', function(e) {
+  console.log('[ServiceWorker] Received push event');
+  e.waitUntil(
+    fetch('pushdata').then(function(response) {
+      var title = 'Weather PWA';
+      var body = response;
+      var icon = '/images/icons/icon-192x192.png';
+      var tag = 'static-tag';
+      self.registration.showNotification(title, {
+        body: body,
+        icon: icon,
+        tag: tag
+      });
+    }).catch(function(e) {
+      throw new Error('Failed to show a notification in response to a push message');
+    });
+  );
+});
