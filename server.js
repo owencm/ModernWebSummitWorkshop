@@ -34,7 +34,7 @@ app.use("/push", function(req, res, next) {
         else
           console.log("PUSH RESPONSE: ", response);
       });
-    }, 0);
+    }, 5000);
     res.send({text:'Sending push in 5',status:"200"});
   } else {
     throw new Error ('Unsupported action');
