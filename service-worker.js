@@ -79,7 +79,7 @@ self.addEventListener('push', function(e) {
   e.waitUntil(
     fetch('pushdata').then(function(response) {
       var title = 'Weather PWA';
-      var body = response;
+      var body = JSON.parse(response).msg;
       var icon = '/images/icons/icon-192x192.png';
       var tag = 'static-tag';
       self.registration.showNotification(title, {
