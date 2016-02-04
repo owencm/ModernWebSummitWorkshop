@@ -24,6 +24,10 @@ var filesToCache = [
 toolbox.options.cache.name = cacheName;
 toolbox.precache(filesToCache);
 
+self.addEventListener('install', function(e) {
+  e.waitUntil(self.skipWaiting());
+});
+
 // activate event
 self.addEventListener('activate', function(e) {
   console.log('[ServiceWorker] Activate');
