@@ -78,8 +78,10 @@ self.addEventListener('push', function(e) {
   console.log('[ServiceWorker] Received push event');
   e.waitUntil(
     fetch('pushdata').then(function(response) {
+      return response.json();
+    }).then(function(data) {
       var title = 'Weather PWA';
-      var body = response;
+      var body = data.msg;
       var icon = '/images/icons/icon-192x192.png';
       var tag = 'static-tag';
       self.registration.showNotification(title, {
