@@ -50,12 +50,12 @@ app.updateForecastCard = function(cityKey, data) {
 *
 ****************************************************************************/
 
-document.querySelector('#butNotif').addEventListener('click', function () {
+document.querySelector('#butNotif').addEventListener('click', (e) => {
   var pushClient = new goog.propel.Client({
     workerUrl: 'service-worker.js', endpointUrl: 'push'
   });
   // TODO: Dim screen
-  pushClient.requestPermission().then(function() {
+  pushClient.requestPermission().then(() => {
     // TODO: Handle permission denial
     // TODO: Undim screen
     // This will POST the user's subscription to `/${endpointUrl}/subscribe`
@@ -74,11 +74,11 @@ app.getForecast = function(cityKey) {
   var url = 'data/' + cityKey + '.json';
   app.hasRequestPending = true;
   // Make the XHR to get the data, then update the card
-  return fetch(url).then(function(response) {
+  return fetch(url).then((response) => {
     if (response.status === 200) {
       return response.json();
     }
-  }).then(function(data){
+  }).then((data) => {
     app.hasRequestPending = false;
     console.log('[App] Forecast Updated From Network');
     return data;
@@ -91,10 +91,10 @@ app.getForecast = function(cityKey) {
 *
 ****************************************************************************/
 
-window.addEventListener('beforeinstallprompt', function(e) {
+window.addEventListener('beforeinstallprompt', (e) => {
   // Here you could send an analytics ping that the A2HS banner has been shown
   console.log('[App] Add to home screen banner shown');
-  e.userChoice.then(function(choiceResult) {
+  e.userChoice.then((choiceResult) => {
     // Here you could send an analytics ping about the users response to the
     // A2HS banner
     if (choiceResult.outcome == 'dismissed') {
@@ -111,9 +111,20 @@ window.addEventListener('beforeinstallprompt', function(e) {
 *
 ****************************************************************************/
 
-app.selectedCityKeys = [ 'newyork' ];
-app.selectedCityKeys.forEach(function(cityKey) {
-  app.getForecast(cityKey).then(function (forecast) {
+
+
+app.selectedCityKeys = [
+  'austin',
+  'baltimore',
+  'boston',
+  'chicago',
+  'dallas',
+  'losangeles',
+  'newyork',
+  'sanfrancisco',
+];
+app.selectedCityKeys.forEach((cityKey) => {
+  app.getForecast(cityKey).then((forecast) => {
     app.updateForecastCard(cityKey, forecast);
   });
 });
@@ -122,6 +133,6 @@ app.selectedCityKeys.forEach(function(cityKey) {
 // Add feature check for Service Workers here
 if('serviceWorker' in navigator) {
   navigator.serviceWorker
-  .register('./service-worker.js')
-  .then(function() { console.log('Service Worker Registered'); });
-}
+           .register('./service-worker.js')
+           .then(() => { console.log('Service Worker Registered');
+});
