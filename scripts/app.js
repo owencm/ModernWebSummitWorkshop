@@ -2,34 +2,6 @@
 (function() {
   'use strict';
 
-  // Insert injected weather forecast here
-  var initialWeatherForecast = {
-    key: 'newyork',
-    label: 'New York, NY',
-    currently: {
-      time: 1453489481,
-      summary: 'Clear',
-      icon: 'partly-cloudy-day',
-      temperature: 52.74,
-      apparentTemperature: 74.34,
-      precipProbability: 0.20,
-      humidity: 0.77,
-      windBearing: 125,
-      windSpeed: 1.52
-    },
-    daily: {
-      data: [
-        {icon: 'clear-day', temperatureMax: 55, temperatureMin: 34},
-        {icon: 'rain', temperatureMax: 55, temperatureMin: 34},
-        {icon: 'snow', temperatureMax: 55, temperatureMin: 34},
-        {icon: 'sleet', temperatureMax: 55, temperatureMin: 34},
-        {icon: 'fog', temperatureMax: 55, temperatureMin: 34},
-        {icon: 'wind', temperatureMax: 55, temperatureMin: 34},
-        {icon: 'partly-cloudy-day', temperatureMax: 55, temperatureMin: 34}
-      ]
-    }
-  };
-
   var app = {
     isLoading: true,
     hasRequestPending: false,
@@ -37,11 +9,8 @@
     selectedCities: [],
     spinner: document.querySelector('.loader'),
     cardTemplate: document.querySelector('.cardTemplate'),
-    container: document.querySelector('.main'),
-    addDialog: document.querySelector('.dialog-container'),
     daysOfWeek: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
   };
-
 
   /*****************************************************************************
    *
@@ -54,43 +23,11 @@
     app.updateForecasts();
   });
 
-  document.getElementById('butAdd').addEventListener('click', function() {
-    // Open/show the add new city dialog
-    app.toggleAddDialog(true);
-  });
-
-  document.getElementById('butAddCity').addEventListener('click', function() {
-    // Add the newly selected city
-    var select = document.getElementById('selectCityToAdd');
-    var selected = select.options[select.selectedIndex];
-    var key = selected.value;
-    var label = selected.textContent;
-    app.getForecast(key, label);
-    app.selectedCities.push({key: key, label: label});
-    app.saveSelectedCities();
-    app.toggleAddDialog(false);
-  });
-
-  document.getElementById('butAddCancel').addEventListener('click', function() {
-    // Close the add new city dialog
-    app.toggleAddDialog(false);
-  });
-
-
   /*****************************************************************************
    *
    * Methods to update/refresh the UI
    *
    ****************************************************************************/
-
-  // Toggles the visibility of the add new city dialog.
-  app.toggleAddDialog = function(visible) {
-    if (visible) {
-      app.addDialog.classList.add('dialog-container--visible');
-    } else {
-      app.addDialog.classList.remove('dialog-container--visible');
-    }
-  };
 
   // Updates a weather card with the latest weather forecast. If the card
   // doesn't already exist, it's cloned from the template.
