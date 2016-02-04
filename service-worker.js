@@ -47,6 +47,7 @@ var nosw = 0;
 self.addEventListener('fetch', function(e) {
   var url = new URL(e.request.url);
   if(nosw || (url.search.indexOf("nosw=1") >= 0)) {
+    console.log('[ServiceWorker] Skipping the ServiceWorker');
     nosw = 1;
     return; // Fall through to the network
   }
