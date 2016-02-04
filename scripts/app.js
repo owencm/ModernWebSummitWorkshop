@@ -92,9 +92,21 @@ app.getForecast = function(cityKey) {
  *
  ****************************************************************************/
 
-app.selectedCityKeys = [ 'newyork' ];
+
+
+app.selectedCityKeys = [
+  'austin',
+  'baltimore',
+  'boston',
+  'chicago',
+  'dallas',
+  'losangeles',
+  'newyork',
+  'sanfrancisco',
+];
 app.selectedCityKeys.forEach(function(cityKey) {
-  app.getForecast(cityKey).then(function (forecast) {
+  app.getForecast(cityKey).then(function(forecast) {
+    console.log(forecast);
     app.updateForecastCard(cityKey, forecast);
   });
 });

@@ -1,4 +1,5 @@
 {
+  "city": "Chicago",
   "currently": {
     "apparentTemperature": 14.12,
     "cloudCover": 0.99,
