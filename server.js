@@ -39,7 +39,11 @@ app.use("/push", function(req, res, next) {
   } else {
     throw new Error ('Unsupported action');
   }
-})
+});
+
+app.use("/pushdata",function(req,res,next){
+    res.send("{msg:'We have "+parseInt(Math.random()*9+1)+" cabs available for you for next one hour}");
+});
 
 app.listen(PORT, function() {
   console.log('express server listening on port ', PORT);
