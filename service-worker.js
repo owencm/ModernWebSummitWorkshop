@@ -1,6 +1,6 @@
-var version = 2;
+var version = '3';
 var dataCacheName = 'weatherData-v' + version;
-var cacheName = 'weatherPWA-' + version;
+var cacheName = 'weatherPWA-v' + version;
 var filesToCache = [
   './',
   './index.html',
