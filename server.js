@@ -42,7 +42,9 @@ app.use("/push", function(req, res, next) {
 });
 
 app.use("/pushdata",function(req,res,next){
-    res.send("{msg:'We have "+parseInt(Math.random()*9+1)+" cabs available for you for next one hour}");
+  res.send(JSON.stringify({
+    msg: "We have "+parseInt(Math.random()*9+1)+" cabs available for you for next one hour"
+  }));
 });
 
 app.listen(PORT, function() {
