@@ -51,7 +51,9 @@ app.updateForecastCard = function(cityKey, data) {
  ****************************************************************************/
 
 document.querySelector('#butNotif').addEventListener('click', function () {
-  // TODO: do permissions for push
+  var pushClient = new goog.propel.Client({
+    workerUrl: 'service-worker.js', endpointUrl: 'push'
+  });
 });
 
 /*****************************************************************************
