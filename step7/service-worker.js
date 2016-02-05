@@ -76,7 +76,7 @@ self.addEventListener('fetch', (e) => {
 self.addEventListener('push', function(e) {
   console.log('[ServiceWorker] Received push event');
   e.waitUntil(
-    fetch('pushdata').then(function(response) {
+    fetch('../pushdata').then(function(response) {
       return response.json();
     }).then(function(data) {
       var title = 'Weather PWA';
