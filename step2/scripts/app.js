@@ -51,16 +51,7 @@ app.updateForecastCard = function(cityKey, data) {
 ****************************************************************************/
 
 document.querySelector('#butNotif').addEventListener('click', (e) => {
-  var pushClient = new goog.propel.Client({
-    workerUrl: 'service-worker.js', endpointUrl: '../push'
-  });
-  // TODO: Dim screen
-  pushClient.requestPermission().then(() => {
-    // TODO: Handle permission denial
-    // TODO: Undim screen
-    // This will POST the user's subscription to `/${endpointUrl}/subscribe`
-    pushClient.subscribe();
-  });
+
 });
 
 /*****************************************************************************
@@ -107,10 +98,3 @@ app.selectedCityKeys.forEach((cityKey) => {
     app.updateForecastCard(cityKey, forecast);
   });
 });
-
-// Add feature check for Service Workers here
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker
-           .register('./service-worker.js')
-           .then(() => console.log('Service Worker Registered'));
-}

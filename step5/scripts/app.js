@@ -78,6 +78,26 @@ app.getForecast = function(cityKey) {
 
 /*****************************************************************************
 *
+* Listen for the add to home screen events
+*
+****************************************************************************/
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Here you could send an analytics ping that the A2HS banner has been shown
+  console.log('[App] Add to home screen banner shown');
+  e.userChoice.then((choiceResult) => {
+    // Here you could send an analytics ping about the users response to the
+    // A2HS banner
+    if (choiceResult.outcome == 'dismissed') {
+      console.log('[App] User cancelled home screen install');
+    } else {
+      console.log('[App] User added to home screen');
+    }
+  });
+});
+
+/*****************************************************************************
+*
 * Start the app
 *
 ****************************************************************************/
