@@ -1,6 +1,7 @@
-var version = '5';
-var dataCacheName = 'weatherData-v' + version;
-var cacheName = 'weatherPWA-v' + version;
+importScripts('../node_modules/sw-toolbox/sw-toolbox.js');
+var version = '6';
+var dataCacheName = 'weatherData-v'+version;
+var cacheName = 'weatherPWA-step-celebrate-'+version;
 var filesToCache = [
   './',
   './index.html',
@@ -9,7 +10,6 @@ var filesToCache = [
   './images/cloudy-scattered-showers.png',
   './images/cloudy.png',
   './images/fog.png',
-  './images/icons/icon-256x256.png',
   './images/partly-cloudy.png',
   './images/rain.png',
   './images/scattered-showers.png',
@@ -19,23 +19,21 @@ var filesToCache = [
   './images/wind.png'
 ];
 
-self.addEventListener('install', (e) => {
-  console.log('[ServiceWorker] Install');
-  e.waitUntil(
-    caches.open(cacheName).then((cache) => {
-      console.log('[ServiceWorker] Caching App Shell');
-      return cache.addAll(filesToCache);
-    })
-  );
+toolbox.options.cache.name = cacheName;
+toolbox.precache(filesToCache);
+
+self.addEventListener('install', function(e) {
+  e.waitUntil(self.skipWaiting());
 });
 
-self.addEventListener('activate', (e) => {
+// activate event
+self.addEventListener('activate', function(e) {
   console.log('[ServiceWorker] Activate');
   e.waitUntil(
-    caches.keys().then((keyList) => {
-      return Promise.all(keyList.map((key) => {
+    caches.keys().then(function(keyList) {
+      return Promise.all(keyList.map(function(key) {
         console.log('[ServiceWorker] Removing old cache', key);
-        if (key !== cacheName) {
+        if (key !== cacheName && key.indexOf("$$$inactive$$$") === -1) {
           return caches.delete(key);
         }
       }));
@@ -44,35 +42,19 @@ self.addEventListener('activate', (e) => {
 });
 
 var nosw = 0;
-self.addEventListener('fetch', (e) => {
+self.addEventListener('fetch', function(e) {
   var url = new URL(e.request.url);
-  if(nosw || (url.search.indexOf("nosw=1") >= 0)) {
-    console.log('[ServiceWorker] Skipping the ServiceWorker');
+  if (nosw || (url.search.indexOf("nosw=1") >= 0)) {
     nosw = 1;
-    return; // Fall through to the network
-  }
-
-  console.log('[ServiceWorker] Fetch', e.request.url);
-  if (e.request.url.indexOf('data/') != -1) {
-    e.respondWith(
-      fetch(e.request)
-        .then((response) => {
-          return caches.open(dataCacheName).then((cache) => {
-            cache.put(e.request.url, response.clone());
-            console.log('[ServiceWorker] Fetched & Cached', e.request.url);
-            return response;
-          });
-        })
-    );
-  } else {
-    e.respondWith(
-      caches.match(e.request).then((response) => {
-        return response || fetch(e.request);
-      })
-    );
+    return;
   }
 });
 
-// self.addEventListener('push', function(e) {
-//   console.log('[ServiceWorker] Received push event');
-// });
+toolbox.router.get('/(.*)', toolbox.networkFirst, {
+  domain: 'https://publicdata-weather.firebaseio.com',
+  cache: { name: dataCacheName }
+});
+
+toolbox.router.get('/(.*)', toolbox.cacheFirst, {
+  cache: { name: cacheName }
+});
