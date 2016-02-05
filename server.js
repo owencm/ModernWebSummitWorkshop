@@ -7,7 +7,8 @@ var gcm = require('node-gcm');
 
 // The GCM API key is AIzaSyDNlm9R_w_0FDGjSM1fzyx5I5JnJBXACqU
 
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/app'));
+app.use(express.static(__dirname + '/serverdataapi'));
 
 app.use(bodyParser.json());
 

@@ -121,12 +121,12 @@ app.selectedCityKeys = [
   'newyork',
   'sanfrancisco',
 ];
+
 app.selectedCityKeys.forEach((cityKey) => {
   app.getForecast(cityKey).then((forecast) => {
     app.updateForecastCard(cityKey, forecast);
   });
 });
-
 
 // Add feature check for Service Workers here
 if('serviceWorker' in navigator) {
