@@ -5,18 +5,7 @@ var filesToCache = [
   './',
   './index.html',
   './scripts/app.js',
-  './images/clear.png',
-  './images/cloudy-scattered-showers.png',
-  './images/cloudy.png',
-  './images/fog.png',
-  './images/icons/icon-256x256.png',
-  './images/partly-cloudy.png',
-  './images/rain.png',
-  './images/scattered-showers.png',
-  './images/sleet.png',
-  './images/snow.png',
-  './images/thunderstorm.png',
-  './images/wind.png'
+  './images/icons/icon-256x256.png'
 ];
 
 self.addEventListener('install', (e) => {
@@ -73,23 +62,6 @@ self.addEventListener('fetch', (e) => {
   }
 });
 
-self.addEventListener('push', function(e) {
-  console.log('[ServiceWorker] Received push event');
-  e.waitUntil(
-    fetch('pushdata').then(function(response) {
-      return response.json();
-    }).then(function(data) {
-      var title = 'Weather PWA';
-      var body = data.msg;
-      var icon = '/images/icons/icon-192x192.png';
-      var tag = 'static-tag';
-      return self.registration.showNotification(title, {
-        body: body,
-        icon: icon,
-        tag: tag
-      });
-    }, function(err) {
-      console.error(err);
-    })
-  );
-});
+// self.addEventListener('push', function(e) {
+//   console.log('[ServiceWorker] Received push event');
+// });

@@ -98,10 +98,3 @@ app.selectedCityKeys.forEach((cityKey) => {
     app.updateForecastCard(cityKey, forecast);
   });
 });
-
-// Add feature check for Service Workers here
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker
-           .register('./service-worker.js')
-           .then(() => console.log('Service Worker Registered'));
-}
