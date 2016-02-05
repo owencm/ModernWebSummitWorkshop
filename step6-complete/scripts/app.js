@@ -90,17 +90,13 @@ app.getForecast = function(cityKey) {
 *
 ****************************************************************************/
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Here you could send an analytics ping that the A2HS banner has been shown
-  console.log('[App] Add to home screen banner shown');
-  e.userChoice.then((choiceResult) => {
-    // Here you could send an analytics ping about the users response to the
-    // A2HS banner
-    if (choiceResult.outcome == 'dismissed') {
-      console.log('[App] User cancelled home screen install');
-    } else {
-      console.log('[App] User added to home screen');
-    }
+window.addEventListener('beforeinstallprompt', function(e) {
+  console.log('[App] Showing install prompt');
+
+  // e.userChoice will return a Promise.
+  // For more details read: http://www.html5rocks.com/en/tutorials/es6/promises/
+  e.userChoice.then(function(choiceResult) {
+    console.log(choiceResult.outcome);
   });
 });
 
