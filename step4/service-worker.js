@@ -40,14 +40,11 @@ self.addEventListener('fetch', function(e) {
   }
 });
 
-toolbox.router.get('/(.*)', toolbox.networkFirst, {
-  domain: 'https://publicdata-weather.firebaseio.com',
+toolbox.router.get('/data/(.*)', toolbox.networkFirst, {
   cache: { name: dataCacheName }
 });
 
-toolbox.router.get('/(.*)', toolbox.cacheFirst, {
-  cache: { name: cacheName }
-});
+toolbox.router.default = toolbox.cacheFirst;
 
 // You will use this later to set up push notifications
 // self.addEventListener('push', function(e) {
