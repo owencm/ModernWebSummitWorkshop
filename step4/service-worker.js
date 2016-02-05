@@ -6,7 +6,17 @@ var filesToCache = [
   './',
   './index.html',
   './scripts/app.js',
-  '/images/icons/icon-256x256.png'
+  './images/clear.png',
+  './images/cloudy-scattered-showers.png',
+  './images/cloudy.png',
+  './images/fog.png',
+  './images/partly-cloudy.png',
+  './images/rain.png',
+  './images/scattered-showers.png',
+  './images/sleet.png',
+  './images/snow.png',
+  './images/thunderstorm.png',
+  './images/wind.png'
 ];
 
 toolbox.options.cache.name = cacheName;
