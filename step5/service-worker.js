@@ -6,17 +6,7 @@ var filesToCache = [
   './',
   './index.html',
   './scripts/app.js',
-  './images/clear.png',
-  './images/cloudy-scattered-showers.png',
-  './images/cloudy.png',
-  './images/fog.png',
-  './images/partly-cloudy.png',
-  './images/rain.png',
-  './images/scattered-showers.png',
-  './images/sleet.png',
-  './images/snow.png',
-  './images/thunderstorm.png',
-  './images/wind.png'
+  './images/icons/icon-256x256.png'
 ];
 
 toolbox.options.cache.name = cacheName;
@@ -50,11 +40,11 @@ self.addEventListener('fetch', function(e) {
   }
 });
 
-toolbox.router.get('/(.*)', toolbox.networkFirst, {
-  domain: 'https://publicdata-weather.firebaseio.com',
-  cache: { name: dataCacheName }
-});
-
 toolbox.router.get('/(.*)', toolbox.cacheFirst, {
   cache: { name: cacheName }
 });
+
+// You will use this later to set up push notifications
+// self.addEventListener('push', function(e) {
+//   console.log('[ServiceWorker] Received push event');
+// });

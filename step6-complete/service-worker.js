@@ -6,17 +6,7 @@ var filesToCache = [
   './',
   './index.html',
   './scripts/app.js',
-  './images/clear.png',
-  './images/cloudy-scattered-showers.png',
-  './images/cloudy.png',
-  './images/fog.png',
-  './images/partly-cloudy.png',
-  './images/rain.png',
-  './images/scattered-showers.png',
-  './images/sleet.png',
-  './images/snow.png',
-  './images/thunderstorm.png',
-  './images/wind.png'
+  './images/icons/icon-256x256.png'
 ];
 
 toolbox.options.cache.name = cacheName;
@@ -58,7 +48,7 @@ self.addEventListener('push', function(e) {
     }).then(function(data) {
       var title = 'Weather PWA';
       var body = data.msg;
-      var icon = '/images/icons/icon-192x192.png';
+      var icon = '/images/icons/icon-256x256.png';
       var tag = 'static-tag';
       return self.registration.showNotification(title, {
         body: body,
@@ -69,12 +59,6 @@ self.addEventListener('push', function(e) {
       console.error(err);
     })
   );
-});
-
-
-toolbox.router.get('/(.*)', toolbox.networkFirst, {
-  domain: 'https://publicdata-weather.firebaseio.com',
-  cache: { name: dataCacheName }
 });
 
 toolbox.router.get('/(.*)', toolbox.cacheFirst, {

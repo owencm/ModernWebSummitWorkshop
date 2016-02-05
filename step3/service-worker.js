@@ -61,3 +61,8 @@ self.addEventListener('fetch', (e) => {
     );
   }
 });
+
+// You will use this later to set up push notifications
+// self.addEventListener('push', function(e) {
+//   console.log('[ServiceWorker] Received push event');
+// });

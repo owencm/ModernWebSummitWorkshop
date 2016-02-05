@@ -71,7 +71,6 @@ app.getForecast = function(cityKey) {
     }
   }).then((data) => {
     app.hasRequestPending = false;
-    console.log('[App] Forecast Updated From Network');
     return data;
   });
 };
