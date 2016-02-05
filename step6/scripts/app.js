@@ -71,7 +71,7 @@ document.querySelector('#butNotif').addEventListener('click', (e) => {
 
 // Gets a forecast for a specific city
 app.getForecast = function(cityKey) {
-  var url = 'data/' + cityKey + '.json';
+  var url = '../data/' + cityKey + '.json';
   app.hasRequestPending = true;
   // Make the XHR to get the data, then update the card
   return fetch(url).then((response) => {
