@@ -17,9 +17,9 @@
   "dependencies": {
     "body-parser": "^1.14.2",
     "express": "^4.13.4",
-    "sw-toolbox": "^3.1.1"
+    "sw-toolbox": "^3.1.1",
+    "web-push": "^1.0.2"
   },
   "devDependencies": {
-    "node-gcm": "^0.14.0"
   }
 }
