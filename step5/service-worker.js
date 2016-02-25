@@ -6,6 +6,7 @@ var filesToCache = [
   './',
   './index.html',
   './scripts/app.js',
+  './styles/inline.css',
   './images/icons/icon-256x256.png'
 ];
 
