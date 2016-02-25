@@ -51,11 +51,15 @@ app.updateForecastCard = function(cityKey, data) {
 ****************************************************************************/
 
 document.querySelector('#butNotif').addEventListener('click', (e) => {
+  // Request permission to send notifications
   Notification.requestPermission().then(() => {
+    // Get a reference to the SW
     return navigator.serviceWorker.ready;
   }).then((sw) => {
+    // Tell it to subscribe with the push server
     return sw.pushManager.subscribe({userVisibleOnly: true});
   }).then((subscription) => {
+    // Send details about the subscription to the server
     return fetch('../push', {
       method: 'POST',
       body: JSON.stringify({
