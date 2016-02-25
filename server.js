@@ -13,6 +13,7 @@ app.use(express.static(__dirname));
 app.use(bodyParser.json());
 
 app.use("/push", function(req, res, next) {
+  console.log(res.body);
   if (req.body.action === 'subscribe') {
     var endpoint = req.body.subscription.endpoint;
 

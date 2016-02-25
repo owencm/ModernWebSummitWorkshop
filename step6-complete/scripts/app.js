@@ -51,14 +51,21 @@ app.updateForecastCard = function(cityKey, data) {
 ****************************************************************************/
 
 document.querySelector('#butNotif').addEventListener('click', (e) => {
-  var pushClient = new goog.propel.Client({
-    workerUrl: 'service-worker.js', endpointUrl: '../push'
-  });
-  // TODO: Dim screen
-  // This will POST the user's subscription to `/${endpointUrl}/subscribe` if successful
-  pushClient.requestPermission().then(() => {
-    // TODO: Handle permission denial
-    // TODO: Undim screen
+  Notification.requestPermission().then(() => {
+    return navigator.serviceWorker.ready;
+  }).then((sw) => {
+    return sw.pushManager.subscribe({userVisibleOnly: true});
+  }).then((subscription) => {
+    return fetch('../push', {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'subscribe',
+        subscription: subscription
+      }),
+      headers: new Headers({
+    		'Content-Type': 'application/json'
+    	})
+    });
   });
 });
 
