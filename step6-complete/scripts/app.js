@@ -55,11 +55,10 @@ document.querySelector('#butNotif').addEventListener('click', (e) => {
     workerUrl: 'service-worker.js', endpointUrl: '../push'
   });
   // TODO: Dim screen
+  // This will POST the user's subscription to `/${endpointUrl}/subscribe` if successful
   pushClient.requestPermission().then(() => {
     // TODO: Handle permission denial
     // TODO: Undim screen
-    // This will POST the user's subscription to `/${endpointUrl}/subscribe`
-    pushClient.subscribe();
   });
 });
 
