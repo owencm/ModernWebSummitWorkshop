@@ -43,6 +43,6 @@ app.use("/pushdata",function(req,res,next){
   }));
 });
 
-app.listen(PORT, function() {
-  console.log('express server listening on port ', PORT);
+app.listen(PORT, 'localhost', function() {
+  console.log('express server listening on port', PORT);
 });
