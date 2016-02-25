@@ -23,7 +23,7 @@ self.addEventListener('activate', function(e) {
     caches.keys().then(function(keyList) {
       return Promise.all(keyList.map(function(key) {
         console.log('[ServiceWorker] Removing old cache', key);
-        if (key !== cacheName && key.indexOf("$$$inactive$$$") === -1) {
+        if ((key !== dataCacheName || key !== cacheName) && key.indexOf("$$$inactive$$$") === -1) {
           return caches.delete(key);
         }
       }));
